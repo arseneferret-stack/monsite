@@ -5,18 +5,32 @@ const overlayContent = document.getElementById('overlay-content');
 
 links.forEach (link => {
     link.addEventListener ('click',(e) => {
-        e.preventDefault();
         const articlePath = link.getAttribute('data-article');
         const imgSrc = link.getAttribute('data-image');
         const label = link.dataset.project;
+
+        if (!articlePath && !imgSrc) {
+            if (link.getAttribute('href') === '#') {
+                e.preventDefault();
+            }
+            return;
+        }
+
+        e.preventDefault();
         
         if (articlePath) {
             // Load article content
             fetch(articlePath)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.text();
+                })
                 .then(html => {
                     if (overlayContent) {
-                        overlayContent.innerHTML = html;
+                        // Sanitize HTML to prevent XSS attacks
+                        overlayContent.innerHTML = DOMPurify.sanitize(html);
                         
                         // Add English version button at the top
                         const buttonContainer = document.createElement('div');
@@ -30,7 +44,8 @@ links.forEach (link => {
                                 'le_vers': 'articles/The_Worm_is_Still_There.html',
                                 'repeter': 'articles/Repeat_is_no_Longer_Play.html',
                                 'demantellement': 'articles/Family_Dismantlement.html',
-                                'anesthesie': 'articles/Under_Anesthesia.html'
+                                'anesthesie': 'articles/Under_Anesthesia.html',
+                                'la_fabrique': 'articles/La_fabrique_politique_de_la_peur_en.html'
                             };
                             const englishPath = englishVersions[label];
                             if (englishPath) {
@@ -63,9 +78,15 @@ links.forEach (link => {
                                 // Fetch and load after delay
                                 setTimeout(() => {
                                     fetch(englishPath)
-                                        .then(response => response.text())
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error(`HTTP ${response.status}`);
+                                            }
+                                            return response.text();
+                                        })
                                         .then(html => {
-                                            overlayContent.innerHTML = html;
+                                            // Sanitize HTML to prevent XSS attacks
+                                            overlayContent.innerHTML = DOMPurify.sanitize(html);
                                         })
                                         .catch(error => alert('English version coming soon!'));
                                 }, 2000);
@@ -83,7 +104,12 @@ links.forEach (link => {
                         }, 4000);
                     }
                 })
-                .catch(error => console.error('Error loading article:', error));
+                .catch(error => {
+                    console.error('Error loading article:', error);
+                    if (link.href && link.href !== '#') {
+                        window.location.href = link.href;
+                    }
+                });
         } else if (imgSrc) {
             // Load image
             overlayImage.src = imgSrc;

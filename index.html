@@ -2,18 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>arseneferret</title>
+    <title>Arsene Ferret</title>
+    <meta name="description" content="Portfolio of Arsene Ferret — films, writing, and projects.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Arsene Ferret">
+    <meta property="og:description" content="Portfolio of Arsene Ferret — films, writing, and projects.">
+    <meta property="og:url" content="https://arseneferret.com/">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://arseneferret.com/">
     <link rel="stylesheet" href="/style.css">
-    <link rel="icon" type="image/jpeg" href="/images/article-bg.jpg">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="/images/article-bg.jpg" sizes="32x32">
+    <link rel="icon" type="image/jpeg" href="/images/article-bg.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" href="/images/article-bg.jpg">
+    <link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-FJe+jvxjP7JMFYC2SaP/eGQXNhvPZgYL2HfQMXJ7XJz3aPRRBdlZtfNWHaUdFa2x" crossorigin="anonymous"></script>
 </head>
-<div id="ghost-word"></div>
-<div id="overlay" class="overlay">
-    <button id="close-overlay" class="close-btn">✕</button>
-    <div id="overlay-content" class="overlay-content"></div>
-    <img id="overlay-image" src="" alt="" class="overlay-image" style="display: none;">
-</div>
 <body>
+    <div id="ghost-word"></div>
+    <div id="overlay" class="overlay">
+        <button id="close-overlay" class="close-btn">✕</button>
+        <div id="overlay-content" class="overlay-content"></div>
+        <img id="overlay-image" src="" alt="" class="overlay-image" style="display: none;">
+    </div>
     <div class="glitch-bg"></div>
     <div class="sticky-note"><a href="mailto:arseneferret@gmail.com">arseneferret@gmail.com</a></div>
 <main class="container">
@@ -21,34 +31,44 @@
     <h2 class="section-title">things i've seen / wrote about</h2>
     <ul class="projects">
         <li>
-            <a href="#" class="project-link" data-article="articles/Le_Vers_est_toujours_la.html" data-project="le_vers" data-text="Le Vers est toujours là">Le Vers est toujours là</a>
+            <a href="/articles/le_vers_est_toujours_la" class="project-link" data-article="/articles/Le_Vers_est_toujours_la.html" data-project="le_vers" data-text="Le Vers est toujours là">Le Vers est toujours là</a>
         </li>
         <li>
-            <a href="#" class="project-link" data-article="articles/Reperer_nest_plus_jouer.html" data-project="repeter" data-text="Répéter n'est plus jouer">Répéter n'est plus jouer</a>
+            <a href="/articles/reperer_nest_plus_jouer" class="project-link" data-article="/articles/Reperer_nest_plus_jouer.html" data-project="repeter" data-text="Répéter n'est plus jouer">Répéter n'est plus jouer</a>
         </li>
         <li>
-            <a href="#" class="project-link" data-article="articles/Le_Demantellement_familial.html" data-project="demantellement" data-text="Le démantèlement familial">Le démantèlement familial</a>
+            <a href="/articles/le_demantellement_familial" class="project-link" data-article="/articles/Le_Demantellement_familial.html" data-project="demantellement" data-text="Le démantèlement familial">Le démantèlement familial</a>
         </li>
         <li>
-            <a href="#" class="project-link" data-article="articles/Sous_anesthesie.html" data-project="anesthesie" data-text="Sous anesthésie">Sous anesthésie</a>
+            <a href="/articles/sous_anesthesie" class="project-link" data-article="/articles/Sous_anesthesie.html" data-project="anesthesie" data-text="Sous anesthésie">Sous anesthésie</a>
         </li>
         <li class="section-break">
             <span class="section-title-inline">films</span>
         </li>
         <li>
-            <a href="#" class="project-link swiss-design" data-article="articles/Not_a_big_deal.html" data-project="notabigdeal" data-text="NoT a biG DeAL">NoT a biG DeAL</a>
+            <a href="/articles/not_a_big_deal" class="project-link swiss-design" data-article="/articles/Not_a_big_deal.html" data-project="notabigdeal" data-text="NoT a biG DeAL">NoT a biG DeAL</a>
+        </li>
+        <li>
+            <a href="/articles/La_fabrique_politique_de_la_peur.html" class="project-link la-fabrique-link" data-article="/articles/La_fabrique_politique_de_la_peur.html" data-project="la_fabrique" data-text="La fabrique politique de la peur">La fabrique politique de la peur</a>
+        </li>
+        <li>
+            <a href="/articles/article1.html" class="project-link" data-article="/articles/article1.html" data-project="article1" data-text="Article 1">Article 1</a>
+        </li>
+        <li>
+            <a href="/articles/article2.html" class="project-link" data-article="/articles/article2.html" data-project="article2" data-text="Article 2">Article 2</a>
+        </li>
+        <li>
+            <a href="/articles/article3.html" class="project-link" data-article="/articles/article3.html" data-project="article3" data-text="Article 3">Article 3</a>
         </li>
     </ul>
     
     <div class="floating-symbols">
-        <a href="#" class="symbol-link" data-symbol="at" data-article="articles/At_symbol.html" data-text="@">@</a>
+        <a href="/articles/at_symbol" class="symbol-link" data-symbol="at" data-article="/articles/At_symbol.html" data-text="@">@</a>
         <a href="#" class="symbol-link" data-symbol="pound" data-article="" data-text="£">£</a>
-        <a href="#" class="symbol-link" data-symbol="heart" data-article="articles/World_symbol.html" data-text="<3">&lt;3</a>
+        <a href="/articles/world_symbol" class="symbol-link" data-symbol="heart" data-article="/articles/World_symbol.html" data-text="<3">&lt;3</a>
         <a href="#" class="symbol-link" data-symbol="star" data-article="" data-text="*_*">*_*</a>
     </div>
 </main>
-
-</div>
 <script src="/script.js"></script>
 </body>
 </html>
