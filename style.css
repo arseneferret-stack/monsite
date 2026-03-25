@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
 :root {
     --text: #faf6ef; /* light text on noisy background */
     --accent: #ffd166; /* warm accent */
@@ -5,12 +8,138 @@
     --container-bg: rgba(0,0,0,0.35);
 }
 
-body{
+body {
+    background-color: #603F83;
+    color: var(--text);
+    min-height: 100vh;
+}
+
+body.article-page {
     margin: 0;
-    background: #603F83;
+    background-color: #603F83;
+    background-image: url('/images/paper-burn.png'), url('/images/paper-texture.jpg');
+    background-size: cover, cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center;
     font-family: Helvetica, Arial, sans-serif;
     color: var(--text);
     padding: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.article-page h1 {
+    font-family: 'Montserrat', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+    animation: titleFloat 3s ease-in-out infinite;
+}
+
+.article-page article {
+    background-image: url('images/paper-texture.jpg'), linear-gradient(180deg, #fbf7ee 0%, #f3ead6 100%);
+    background-size: cover, auto;
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+}
+
+.article-page .container {
+    max-width: none;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.article-page article {
+    max-width: 760px;
+    width: calc(100% - 48px);
+    color: #111;
+    background-image: url('images/paper-texture.jpg'), linear-gradient(180deg, #fbf7ee 0%, #f3ead6 100%);
+    background-size: cover, auto;
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    padding: 36px;
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: 80vh;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    font-family: 'Special Elite', 'Courier New', monospace;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    user-select: none;
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+}
+
+.article-page article > * {
+    position: relative;
+    z-index: 1;
+}
+
+.article-page article h1 {
+    font-family: 'Montserrat', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    margin-top: 0;
+    color: #1a1a1a;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    animation: titleFloat 3s ease-in-out infinite;
+    display: inline-block;
+}
+
+.article-page article p {
+    font-size: 18px;
+    color: #111;
+    margin: 16px 0;
+}
+
+.article-page article p.byline {
+    color: rgba(0,0,0,0.6);
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.article-page article p.lead {
+    font-size: 20px;
+    margin-top: 12px;
+    margin-bottom: 14px;
+}
+
+.article-page article a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.article-page article blockquote {
+    border-left: 4px solid rgba(0,0,0,0.08);
+    padding-left: 14px;
+    color: #333;
+    font-style: italic;
+    margin: 18px 0;
+}
+
+.article-page article h2 {
+    font-family: 'Montserrat', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 20px;
+    margin-top: 22px;
+}
+
+.article-page article img {
+    max-width: 100%;
+    display: block;
+    margin: 14px 0;
+}
+
+.article-page article p:first-of-type::first-letter {
+    font-size: 64px;
+    float: left;
+    line-height: 0.8;
+    margin-right: 12px;
+    font-family: 'Montserrat', 'Futura', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
 }
 
 .sticky-note {
@@ -43,11 +172,11 @@ body{
 /* RETRO DIALOG BOX BUTTONS */
 
 .retro-button {
-    background: linear-gradient(to bottom, #dfdfdf 0%, #808080 100%);
-    border: 2px outset #dfdfdf;
-    border-right-color: #808080;
-    border-bottom-color: #808080;
-    color: #000;
+    background: linear-gradient(to bottom, #000080 0%, #1084d7 100%);
+    border: 2px outset #000080;
+    border-right-color: #1084d7;
+    border-bottom-color: #1084d7;
+    color: #ffffff !important; /* force blanc */
     font-family: 'MS Sans Serif', Arial, sans-serif;
     font-size: 14px;
     padding: 8px 24px;
@@ -59,6 +188,58 @@ body{
 }
 
 .retro-button:active {
+    border-style: inset;
+    box-shadow: -1px -1px 0 rgba(255,255,255,0.5) inset, 1px 1px 0 rgba(0,0,0,0.5) inset;
+}
+
+/* BACK BUTTON */
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(to bottom, #dfdfdf 0%, #808080 100%);
+    border: 2px outset #dfdfdf;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    color: #000;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 14px;
+    padding: 8px 16px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 1px 1px 0 rgba(255,255,255,0.5) inset, -1px -1px 0 rgba(0,0,0,0.5) inset;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.back-button:active {
+    border-style: inset;
+    box-shadow: -1px -1px 0 rgba(255,255,255,0.5) inset, 1px 1px 0 rgba(0,0,0,0.5) inset;
+}
+
+/* CLOSE BUTTON */
+
+.close-button {
+    position: fixed;
+    top: 20px;
+    right: 120px; /* next to back button */
+    background: linear-gradient(to bottom, #dfdfdf 0%, #808080 100%);
+    border: 2px outset #dfdfdf;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    color: #000;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 14px;
+    padding: 4px 8px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 1px 1px 0 rgba(255,255,255,0.5) inset, -1px -1px 0 rgba(0,0,0,0.5) inset;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.close-button:active {
     border-style: inset;
     box-shadow: -1px -1px 0 rgba(255,255,255,0.5) inset, 1px 1px 0 rgba(0,0,0,0.5) inset;
 }
@@ -159,15 +340,17 @@ body{
 @keyframes progressLoad {
     0% { width: 0%; }
     100% { width: 100%; }
-} 
-h1{
+}
+
+body:not(.article-page) h1 {
     font-size: 56px;
     font-weight: 500;
-    margin-bottom:8px;
+    margin-bottom: 8px;
     color: var(--text);
     text-shadow: 0 6px 18px rgba(0,0,0,0.6);
 }
-p{
+
+body:not(.article-page) p {
     font-size: 18px;
     color: #666666;
 }
@@ -318,13 +501,17 @@ p{
     position: relative;
     display: inline-block;
 
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Merriweather', 'Georgia', 'Times New Roman', serif;
     font-size: 18px;
     font-weight: 700;
 
-    color: var(--text);
+    color: #000;
     text-transform: lowercase;
     text-decoration: none;
+}
+
+.project-link:hover {
+    color: #ffd166;
 }
 
 .project-link.swiss-design {
@@ -388,7 +575,7 @@ p{
 }
 
 .project-link:hover { 
-    color: #333333; 
+    color: #ffd166; 
 }
 
 #overlay .article-title {

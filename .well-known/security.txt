@@ -1,0 +1,5 @@
+Contact: mailto:arseneferret@gmail.com
+Expires: 2027-02-12T23:59:59.000Z
+Preferred-Languages: fr, en
+Canonical: https://arseneferret.com/.well-known/security.txt
+Policy: https://arseneferret.com/
