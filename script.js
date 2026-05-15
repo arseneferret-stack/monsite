@@ -6,51 +6,18 @@ const overlayContent = document.getElementById('overlay-content');
 links.forEach(bindOverlayLink);
 
 function bindOverlayLink(link) {
+    const articlePath = link.getAttribute('data-article');
+    if (articlePath) {
+        link.setAttribute('href', articlePath);
+    }
+
     link.addEventListener('click', (e) => {
         const articlePath = link.getAttribute('data-article');
         const imgSrc = link.getAttribute('data-image');
         const label = link.dataset.project || '';
 
         if (articlePath) {
-            e.preventDefault();
-            showLoadingDialog('Chargement du texte...');
-
-            fetch(articlePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const articleNode = doc.querySelector('article');
-
-                    overlayContent.innerHTML = '';
-
-                    if (articleNode) {
-                        const cloned = articleNode.cloneNode(true);
-
-                        // if article already has English button, keep it. Sinon ajouter.
-                        addEnglishButtonIfMissing(cloned, articlePath);
-
-                        overlayContent.appendChild(cloned);
-                    } else {
-                        // fallback to sanitized full HTML
-                        overlayContent.innerHTML = DOMPurify.sanitize(html);
-                    }
-
-                    overlay.classList.add('active');
-                    spawnProjectWords(label);
-                    hideLoadingDialog();
-                })
-                .catch(error => {
-                    console.error('Error loading article:', error);
-                    hideLoadingDialog();
-                    alert('Impossible de charger l’article. Rafraîchissez la page ou essayez plus tard.');
-                });
-
+            // Full-page reading mode: keep native navigation for article links.
             return;
         }
 
@@ -156,15 +123,7 @@ document.addEventListener('click', (e) => {
     const href = target.getAttribute('href');
     if (!href || !href.match('/articles/')) return;
 
-    e.preventDefault();
-    showLoadingDialog('Chargement de la version anglaise...');
-    if (overlayContent) overlayContent.classList.add('glitch-animation');
-
-    setTimeout(() => {
-        if (overlayContent) overlayContent.classList.remove('glitch-animation');
-        hideLoadingDialog();
-        window.location.href = href;
-    }, 2000);
+    // Keep direct navigation for better reading flow between translations.
 });
 
 // Auto-add English version button on article pages if missing
@@ -328,7 +287,18 @@ function fetchSubstackFeed(endpoints) {
 }
 
 function renderWritingProjects(projectsList, items, endpoint) {
-    const writingItems = items.filter((item) => item.localPath);
+    const writingItems = items.filter((item) => {
+        if (!item.localPath) {
+            return false;
+        }
+
+        // Keep FR-first listing when a paired translation exists.
+        if (item.language === 'en' && item.translationPath) {
+            return false;
+        }
+
+        return true;
+    });
 
     if (!writingItems.length) {
         renderWritingProjectsError(projectsList);
