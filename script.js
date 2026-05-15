@@ -3,7 +3,9 @@ const overlay = document.getElementById ('overlay');
 const overlayImage = document.getElementById('overlay-image');
 const overlayContent = document.getElementById('overlay-content');
 
-links.forEach(link => {
+links.forEach(bindOverlayLink);
+
+function bindOverlayLink(link) {
     link.addEventListener('click', (e) => {
         const articlePath = link.getAttribute('data-article');
         const imgSrc = link.getAttribute('data-image');
@@ -67,7 +69,7 @@ links.forEach(link => {
             e.preventDefault();
         }
     });
-});
+}
 
 // Close button functionality
 const closeBtn = document.getElementById('close-overlay');
@@ -78,11 +80,13 @@ if (closeBtn) {
 }
 
 // Close overlay when clicking on the dark background
-overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-        overlay.classList.remove('active');
-    }
-});
+if (overlay) {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+        }
+    });
+}
 
 let loadingDialog = null;
 function showLoadingDialog(message = 'Loading...') {
@@ -242,6 +246,7 @@ document.addEventListener('click', (e) => {
 const words = [];
 const ghost = document.getElementById("ghost-word");
 function showWord() {
+    if (!words.length) return;
     const word = words[Math.floor(Math.random() * words.length)];
     ghost.textContent = word;
     ghost.style.top = Math.random() * 90 + "vh";
@@ -269,3 +274,110 @@ function spawnProjectWords(label) {
         }, 2000 + Math.random() * 2000);
     }
 } 
+
+(function loadSubstackFeed() {
+    const main = document.querySelector('main[data-substack-feed-url]');
+    const projectsList = document.querySelector('.projects');
+
+    if (!main || !projectsList) {
+        return;
+    }
+
+    const feedUrl = main.getAttribute('data-substack-feed-url');
+    const canonicalHref = document.querySelector('link[rel="canonical"]')?.href || '';
+    const canonicalOrigin = canonicalHref ? new URL(canonicalHref).origin : '';
+    const localEndpoint = `/.netlify/functions/substack-feed?url=${encodeURIComponent(feedUrl)}`;
+    const remoteEndpoint = canonicalOrigin
+        ? `${canonicalOrigin}/.netlify/functions/substack-feed?url=${encodeURIComponent(feedUrl)}`
+        : null;
+    const endpoints = [localEndpoint, remoteEndpoint].filter((value, index, list) => value && list.indexOf(value) === index);
+
+    fetchSubstackFeed(endpoints)
+        .then(({ payload, endpoint }) => {
+            renderWritingProjects(projectsList, payload.items || [], endpoint);
+        })
+        .catch((error) => {
+            console.error('Error loading Substack feed:', error);
+            renderWritingProjectsError(projectsList);
+        });
+})();
+
+function fetchSubstackFeed(endpoints) {
+    const [current, ...rest] = endpoints;
+
+    if (!current) {
+        return Promise.reject(new Error('No Substack feed endpoint available'));
+    }
+
+    return fetch(current)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            return response.json();
+        })
+        .then((payload) => ({ payload, endpoint: current }))
+        .catch((error) => {
+            if (!rest.length) {
+                throw error;
+            }
+
+            return fetchSubstackFeed(rest);
+        });
+}
+
+function renderWritingProjects(projectsList, items, endpoint) {
+    const writingItems = items.filter((item) => item.localPath);
+
+    if (!writingItems.length) {
+        renderWritingProjectsError(projectsList);
+        return;
+    }
+
+    projectsList.classList.add('projects-auto');
+
+    const endpointOrigin = new URL(endpoint, window.location.href).origin;
+    const sectionBreak = projectsList.querySelector('.section-break');
+
+    projectsList.querySelectorAll('.auto-writing-item, .projects-status-item').forEach((node) => {
+        node.remove();
+    });
+
+    writingItems.forEach((item) => {
+        const entry = document.createElement('li');
+        entry.className = 'auto-writing-item';
+        const articlePath = new URL(item.localPath, endpointOrigin).toString();
+
+        const title = document.createElement('a');
+        title.className = 'project-link';
+        title.href = articlePath;
+        title.setAttribute('data-article', articlePath);
+        title.dataset.project = item.slug || 'substack';
+        title.dataset.text = item.title;
+        title.textContent = item.title;
+        bindOverlayLink(title);
+
+        entry.appendChild(title);
+        projectsList.insertBefore(entry, sectionBreak);
+    });
+}
+
+function renderWritingProjectsError(projectsList) {
+    projectsList.classList.add('projects-auto');
+
+    projectsList.querySelectorAll('.auto-writing-item, .projects-status-item').forEach((node) => {
+        node.remove();
+    });
+
+    const sectionBreak = projectsList.querySelector('.section-break');
+    const entry = document.createElement('li');
+    entry.className = 'projects-status-item';
+
+    const message = document.createElement('p');
+    message.className = 'substack-status';
+    message.textContent = 'Impossible de charger les derniers articles pour le moment.';
+
+    entry.appendChild(message);
+    projectsList.insertBefore(entry, sectionBreak);
+}

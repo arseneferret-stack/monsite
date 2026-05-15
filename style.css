@@ -6,12 +6,17 @@
     --accent: #ffd166; /* warm accent */
     --muted: rgba(255,255,255,0.85);
     --container-bg: rgba(0,0,0,0.35);
+    --frontpage-font: 'DIN 1451 Engschrift', 'DIN 1451 Mittelschrift', 'DIN 1451', 'FF DIN', 'Bahnschrift', 'Arial Narrow', sans-serif;
 }
 
 body {
     background-color: #603F83;
     color: var(--text);
     min-height: 100vh;
+}
+
+body:not(.article-page) {
+    font-family: var(--frontpage-font);
 }
 
 body.article-page {
@@ -149,7 +154,7 @@ body.article-page {
     width: 100px;
     padding: 8px;
     background-color: #ffd966;
-    font-family: Futura, 'Trebuchet MS', sans-serif;
+    font-family: var(--frontpage-font);
     font-size: 10px;
     color: #333;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
@@ -343,6 +348,7 @@ body.article-page {
 }
 
 body:not(.article-page) h1 {
+    font-family: var(--frontpage-font);
     font-size: 56px;
     font-weight: 500;
     margin-bottom: 8px;
@@ -351,6 +357,7 @@ body:not(.article-page) h1 {
 }
 
 body:not(.article-page) p {
+    font-family: var(--frontpage-font);
     font-size: 18px;
     color: #666666;
 }
@@ -411,6 +418,7 @@ body:not(.article-page) p {
 }
 
 .section-title-inline {
+    font-family: var(--frontpage-font);
     font-variant: small-caps;
     text-transform: lowercase;
     color: var(--accent);
@@ -433,6 +441,32 @@ body:not(.article-page) p {
     z-index: 50;
     visibility: visible;
     display: block;
+}
+
+.projects-status-item {
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 520px;
+    text-align: center;
+}
+
+.projects.projects-auto {
+    min-height: auto;
+    margin-top: 24px;
+}
+
+.projects.projects-auto li {
+    position: static;
+    margin-bottom: 18px;
+    transform: none;
+    left: auto;
+    right: auto;
+    top: auto;
+}
+
+.projects.projects-auto .section-break {
+    margin: 24px 0 8px;
 }
 
 /* FLOATING SYMBOLS */
@@ -487,6 +521,7 @@ body:not(.article-page) p {
 }
 
 .section-title{
+    font-family: var(--frontpage-font);
     font-variant: small-caps;
     text-transform: lowercase;
     color: var(--accent);
@@ -495,13 +530,93 @@ body:not(.article-page) p {
     font-weight: 600;
 }
 
+.substack-section {
+    position: relative;
+    z-index: 20;
+    margin: 720px 0 80px;
+    padding: 28px;
+    border: 1px solid rgba(255, 209, 102, 0.35);
+    background: linear-gradient(135deg, rgba(26, 17, 12, 0.74), rgba(72, 42, 22, 0.56));
+    backdrop-filter: blur(6px);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.28);
+}
+
+.substack-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.substack-section-header .section-title {
+    margin: 0;
+}
+
+.substack-feed {
+    min-height: 120px;
+}
+
+.substack-status {
+    margin: 0;
+    color: var(--muted);
+    font-family: var(--frontpage-font);
+}
+
+.substack-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.substack-item {
+    padding: 18px;
+    background: rgba(255, 248, 232, 0.92);
+    color: #1f130c;
+    border: 1px solid rgba(31, 19, 12, 0.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.14);
+}
+
+.substack-item-link {
+    display: inline-block;
+    color: #1f130c;
+    text-decoration: none;
+    font-family: var(--frontpage-font);
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+.substack-item-link:hover {
+    color: #8c3b1f;
+}
+
+.substack-item-meta {
+    font-family: var(--frontpage-font);
+    margin: 10px 0 0;
+    color: rgba(31, 19, 12, 0.68);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.substack-item-excerpt {
+    font-family: var(--frontpage-font);
+    margin: 12px 0 0;
+    color: #38261a;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
 /* STYLE DES TITRES */
 
 .project-link {
     position: relative;
     display: inline-block;
 
-    font-family: 'Merriweather', 'Georgia', 'Times New Roman', serif;
+    font-family: var(--frontpage-font);
     font-size: 18px;
     font-weight: 700;
 
@@ -515,7 +630,7 @@ body:not(.article-page) p {
 }
 
 .project-link.swiss-design {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--frontpage-font);
     font-weight: 500;
     letter-spacing: -0.5px;
     text-transform: none;
@@ -854,4 +969,14 @@ body:not(.article-page) p {
     60% { opacity: 0.9; }
     80% { opacity: 0.2; }
     100% { opacity: 0; }
+}
+
+@media (max-width: 720px) {
+    .projects-status-item {
+        top: 250px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 520px;
+        text-align: center;
+    }
 }

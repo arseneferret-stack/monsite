@@ -57,3 +57,8 @@
   from = "/articles/La_fabrique_politique_de_la_peur_en"
   to = "/articles/La_fabrique_politique_de_la_peur_en.html"
   status = 200
+
+[[redirects]]
+  from = "/articles/substack/*"
+  to = "/.netlify/functions/substack-article?slug=:splat"
+  status = 200
