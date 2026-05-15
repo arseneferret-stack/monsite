@@ -11,7 +11,7 @@ exports.handler = async function handler(event) {
         return htmlResponse(405, '<h1>Method not allowed</h1>');
     }
 
-    const slug = (event.queryStringParameters?.slug || '').trim();
+    const slug = getRequestedSlug(event);
     if (!slug) {
         return htmlResponse(400, '<h1>Missing article slug</h1>');
     }
@@ -28,7 +28,7 @@ exports.handler = async function handler(event) {
         }
 
         const xml = await response.text();
-        const article = findArticleBySlug(xml, slug);
+        const article = findArticleBySlug(xml, slug, event);
 
         if (!article) {
             return htmlResponse(404, '<h1>Article not found</h1>');
@@ -42,7 +42,22 @@ exports.handler = async function handler(event) {
     }
 };
 
-function findArticleBySlug(xml, slug) {
+function getRequestedSlug(event) {
+    const fromQuery = (event.queryStringParameters?.slug || '').trim();
+    if (fromQuery) {
+        return fromQuery;
+    }
+
+    const rawPath = event.rawPath || event.path || '';
+    const match = rawPath.match(/\/articles\/substack\/([^/?#]+)/i);
+    if (!match || !match[1]) {
+        return '';
+    }
+
+    return decodeURIComponent(match[1]).trim();
+}
+
+function findArticleBySlug(xml, slug, event) {
     const itemMatches = xml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
     const items = pairTranslations(itemMatches.map(parseItem).filter((item) => item.slug));
 
