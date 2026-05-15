@@ -49,7 +49,7 @@ function getRequestedSlug(event) {
     }
 
     const rawPath = event.rawPath || event.path || '';
-    const match = rawPath.match(/\/articles\/substack\/([^/?#]+)/i);
+    const match = rawPath.match(/\/(?:articles\/substack|\.netlify\/functions\/substack-article)\/([^/?#]+)/i);
     if (!match || !match[1]) {
         return '';
     }
@@ -85,8 +85,13 @@ function toAbsoluteArticlePath(event, path) {
         return null;
     }
 
-    const protocol = event.headers['x-forwarded-proto'] || 'https';
-    const host = event.headers['x-forwarded-host'] || event.headers.host;
+    const headers = event.headers || {};
+    const protocol = headers['x-forwarded-proto'] || headers['X-Forwarded-Proto'] || 'https';
+    const host = headers['x-forwarded-host'] || headers['X-Forwarded-Host'] || headers.host || '';
+    if (!host) {
+        return path;
+    }
+
     return `${protocol}://${host}${path}`;
 }
 

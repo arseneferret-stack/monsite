@@ -60,5 +60,5 @@
 
 [[redirects]]
   from = "/articles/substack/*"
-  to = "/.netlify/functions/substack-article?slug=:splat"
+  to = "/.netlify/functions/substack-article/:splat"
   status = 200
