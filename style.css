@@ -1149,6 +1149,7 @@ body.article-page {
     color: #1f160f;
 }
 
+/* Tablet & Small Desktop */
 @media (max-width: 900px) {
     .projects,
     .projects.projects-auto {
@@ -1162,5 +1163,124 @@ body.article-page {
     .article-page article {
         min-height: calc(100vh - 90px);
         border-radius: 10px;
+    }
+}
+
+/* Mobile - Optimized layout */
+@media (max-width: 768px) {
+    .container {
+        width: calc(100% - 24px);
+        padding: 60px 12px 100px;
+    }
+
+    body:not(.article-page) h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin-bottom: 6px;
+    }
+
+    .section-title {
+        font-size: 0.9rem;
+        margin-bottom: 32px;
+        margin-top: 12px;
+    }
+
+    .projects,
+    .projects.projects-auto {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .project-link {
+        padding: 20px 16px;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+
+    .project-link:hover {
+        transform: translateY(-4px);
+    }
+
+    .projects .section-break {
+        padding-top: 24px;
+        margin: 0 0 0 0;
+    }
+
+    .projects .section-title-inline {
+        font-size: 0.85rem;
+    }
+
+    .sticky-note {
+        display: none;
+    }
+
+    body.article-page {
+        padding: 16px 0 40px;
+    }
+
+    .article-page article {
+        width: calc(100% - 24px);
+        padding: 24px 12px;
+        max-height: none;
+        min-height: auto;
+        border-radius: 0;
+    }
+
+    .article-page article h1 {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .article-page article p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .article-page article p:first-of-type::first-letter {
+        font-size: 48px;
+    }
+
+    .floating-symbols {
+        display: none;
+    }
+}
+
+/* Smaller Mobile Devices */
+@media (max-width: 480px) {
+    .container {
+        width: calc(100% - 16px);
+        padding: 48px 8px 80px;
+    }
+
+    body:not(.article-page) h1 {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
+    }
+
+    .section-title {
+        font-size: 0.8rem;
+        margin-bottom: 24px;
+    }
+
+    .projects,
+    .projects.projects-auto {
+        gap: 12px;
+    }
+
+    .project-link {
+        padding: 16px 12px;
+        font-size: 0.95rem;
+        line-height: 1.3;
+    }
+
+    .article-page article {
+        width: calc(100% - 16px);
+        padding: 16px 8px;
+    }
+
+    .article-page article h1 {
+        font-size: 20px;
+    }
+
+    .article-page article p {
+        font-size: 15px;
     }
 }
