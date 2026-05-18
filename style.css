@@ -319,24 +319,26 @@ body.article-page {
 
 .sticky-note {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 100px;
-    padding: 8px;
-    background-color: #ffd966;
+    top: 18px;
+    right: 18px;
+    width: 172px;
+    padding: 14px 12px;
+    background: linear-gradient(145deg, #ffe88a 0%, #ffd966 55%, #f6c94f 100%);
     font-family: var(--frontpage-font);
-    font-size: 10px;
-    color: #333;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    font-size: 13px;
+    font-weight: 600;
+    color: #2a2100;
+    border: 1px solid rgba(128, 92, 0, 0.32);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.2);
     transform: rotate(-3deg);
     z-index: 100;
-    border-radius: 2px;
+    border-radius: 6px;
     text-align: center;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 .sticky-note a {
-    color: #333;
+    color: #2a2100;
     text-decoration: none;
 }
 
