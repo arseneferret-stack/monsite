@@ -122,6 +122,29 @@ function renderArticlePage(article) {
     ${article.body}
     <p style="margin-top:18px; font-size:13px; color:rgba(0,0,0,0.6)">Publié automatiquement depuis Substack — lire en ligne.</p>
   </div>
+
+  <div class="article-engagement">
+    <div class="engagement-header">
+      <button class="like-btn" data-article-slug="${escapeHtml(article.slug || title.replace(/\\s+/g, '-').toLowerCase())}">
+        <span class="like-icon">♥</span>
+        <span class="like-count">0</span>
+      </button>
+      <span class="comment-count">
+        <span class="comment-icon">💬</span>
+        <span class="comment-num">0</span>
+      </span>
+    </div>
+
+    <div class="comments-section">
+      <h3>Laisser un commentaire</h3>
+      <form class="comment-form" data-article-slug="${escapeHtml(article.slug || title.replace(/\\s+/g, '-').toLowerCase())}">
+        <input type="text" name="name" placeholder="Votre nom" required>
+        <textarea name="message" placeholder="Votre commentaire..." required rows="4"></textarea>
+        <button type="submit" class="submit-btn">Envoyer</button>
+      </form>
+      <div class="comments-list"></div>
+    </div>
+  </div>
 </article>
 <script src="/script.js"></script>
 </body>

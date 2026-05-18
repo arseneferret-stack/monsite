@@ -151,6 +151,172 @@ body.article-page {
     font-weight: 700;
 }
 
+/* Article Engagement Section - Likes & Comments */
+.article-engagement {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 2px solid rgba(0,0,0,0.1);
+}
+
+.engagement-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.like-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--frontpage-font);
+}
+
+.like-btn:hover {
+    border-color: #ff6b6b;
+    background: #fff5f5;
+}
+
+.like-btn.liked {
+    border-color: #ff6b6b;
+    background: #ffe0e0;
+}
+
+.like-icon {
+    font-size: 16px;
+}
+
+.like-count {
+    font-weight: 600;
+    color: #333;
+}
+
+.like-btn.liked .like-icon {
+    animation: heartPulse 0.6s ease;
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.comment-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    font-size: 14px;
+}
+
+.comment-icon {
+    font-size: 16px;
+}
+
+.comments-section {
+    margin-top: 32px;
+}
+
+.comments-section h3 {
+    font-family: var(--frontpage-font);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.comment-form input,
+.comment-form textarea {
+    font-family: var(--frontpage-font);
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #ffd166;
+    box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.1);
+}
+
+.submit-btn {
+    align-self: flex-start;
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: var(--frontpage-font);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #555;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+.comments-list {
+    margin-top: 24px;
+}
+
+.comment-item {
+    background: #f9f9f9;
+    border-left: 4px solid #ffd166;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+.comment-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.comment-time {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.comment-text {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.no-comments {
+    color: #999;
+    font-size: 14px;
+    font-style: italic;
+}
+
 .sticky-note {
     position: fixed;
     top: 20px;
@@ -1272,6 +1438,25 @@ body.article-page {
         margin: 20px 0;
     }
 
+    .article-engagement {
+        margin-top: 32px;
+        padding-top: 24px;
+    }
+
+    .engagement-header {
+        margin-bottom: 24px;
+    }
+
+    .like-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+        font-size: 16px;
+    }
+
     .floating-symbols {
         display: none;
     }
@@ -1355,5 +1540,42 @@ body.article-page {
 
     .article-page article img {
         margin: 16px 0;
+    }
+
+    .article-engagement {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+
+    .like-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .comment-count {
+        font-size: 12px;
+    }
+
+    .comments-section h3 {
+        font-size: 14px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .comment-item {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    .comment-text {
+        font-size: 13px;
     }
 }

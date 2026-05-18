@@ -351,3 +351,205 @@ function renderWritingProjectsError(projectsList) {
     entry.appendChild(message);
     projectsList.insertBefore(entry, sectionBreak);
 }
+
+/* Article Engagement: Likes & Comments */
+function initializeArticleEngagement() {
+    const likeBtn = document.querySelector('.like-btn');
+    const commentForm = document.querySelector('.comment-form');
+    const commentsList = document.querySelector('.comments-list');
+
+    if (!likeBtn || !commentForm || !commentsList) {
+        return;
+    }
+
+    const articleSlug = likeBtn.getAttribute('data-article-slug');
+    if (!articleSlug) {
+        return;
+    }
+
+    // Initialize likes
+    loadLikes(articleSlug, likeBtn);
+
+    // Handle like button click
+    likeBtn.addEventListener('click', () => {
+        toggleLike(articleSlug, likeBtn);
+    });
+
+    // Handle comment form submission
+    commentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitComment(articleSlug, commentForm, commentsList);
+    });
+
+    // Load and display comments
+    loadComments(articleSlug, commentsList);
+}
+
+function loadLikes(slug, btn) {
+    const likes = getLikeCount(slug);
+    const likeCount = btn.querySelector('.like-count');
+    likeCount.textContent = likes.count;
+
+    if (likes.hasLiked) {
+        btn.classList.add('liked');
+    }
+}
+
+function toggleLike(slug, btn) {
+    const likes = getLikeCount(slug);
+    const likeCount = btn.querySelector('.like-count');
+
+    if (likes.hasLiked) {
+        likes.count--;
+        likes.hasLiked = false;
+        btn.classList.remove('liked');
+    } else {
+        likes.count++;
+        likes.hasLiked = true;
+        btn.classList.add('liked');
+    }
+
+    likeCount.textContent = likes.count;
+    saveLikes(slug, likes);
+}
+
+function getLikeCount(slug) {
+    const stored = localStorage.getItem(`likes_${slug}`);
+    if (!stored) {
+        return { count: 0, hasLiked: false };
+    }
+
+    return JSON.parse(stored);
+}
+
+function saveLikes(slug, likes) {
+    localStorage.setItem(`likes_${slug}`, JSON.stringify(likes));
+}
+
+function submitComment(slug, form, commentsList) {
+    const nameInput = form.querySelector('input[name="name"]');
+    const messageInput = form.querySelector('textarea[name="message"]');
+
+    const name = nameInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !message) {
+        return;
+    }
+
+    // Create comment object
+    const comment = {
+        name: name,
+        message: message,
+        timestamp: new Date().toISOString()
+    };
+
+    // Save comment to localStorage
+    const comments = getComments(slug);
+    comments.push(comment);
+    saveComments(slug, comments);
+
+    // Clear form
+    form.reset();
+
+    // Reload comments display
+    loadComments(slug, commentsList);
+
+    // Update comment count
+    updateCommentCount(slug);
+}
+
+function getComments(slug) {
+    const stored = localStorage.getItem(`comments_${slug}`);
+    if (!stored) {
+        return [];
+    }
+
+    return JSON.parse(stored);
+}
+
+function saveComments(slug, comments) {
+    localStorage.setItem(`comments_${slug}`, JSON.stringify(comments));
+}
+
+function loadComments(slug, commentsList) {
+    const comments = getComments(slug);
+
+    commentsList.innerHTML = '';
+
+    if (comments.length === 0) {
+        commentsList.innerHTML = '<p class="no-comments">Aucun commentaire pour le moment. Soyez le premier!</p>';
+        return;
+    }
+
+    comments.forEach((comment) => {
+        const commentEl = createCommentElement(comment);
+        commentsList.appendChild(commentEl);
+    });
+}
+
+function createCommentElement(comment) {
+    const div = document.createElement('div');
+    div.className = 'comment-item';
+
+    const name = document.createElement('div');
+    name.className = 'comment-name';
+    name.textContent = comment.name;
+
+    const time = document.createElement('div');
+    time.className = 'comment-time';
+    time.textContent = formatCommentTime(comment.timestamp);
+
+    const message = document.createElement('div');
+    message.className = 'comment-text';
+    message.textContent = comment.message;
+
+    div.appendChild(name);
+    div.appendChild(time);
+    div.appendChild(message);
+
+    return div;
+}
+
+function formatCommentTime(isoString) {
+    const date = new Date(isoString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) {
+        return 'À l\'instant';
+    } else if (diffMins < 60) {
+        return `Il y a ${diffMins}m`;
+    } else if (diffHours < 24) {
+        return `Il y a ${diffHours}h`;
+    } else if (diffDays < 7) {
+        return `Il y a ${diffDays}j`;
+    } else {
+        return date.toLocaleDateString('fr-FR');
+    }
+}
+
+function updateCommentCount(slug) {
+    const comments = getComments(slug);
+    const countEl = document.querySelector('.comment-num');
+    if (countEl) {
+        countEl.textContent = comments.length;
+    }
+}
+
+// Initialize engagement when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.body.classList.contains('article-page')) {
+        initializeArticleEngagement();
+    }
+});
+
+// Also initialize if DOM is already ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeArticleEngagement);
+} else {
+    initializeArticleEngagement();
+}
