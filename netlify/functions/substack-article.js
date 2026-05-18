@@ -240,7 +240,7 @@ function normalizeArticleHtml(value) {
     let html = sanitizeHtml(value || '');
 
     if (!html) {
-        return '<p class="lead">Article indisponible.</p>';
+        return '';
     }
 
     html = html.replace(/<p(?![^>]*class=)/i, '<p class="lead"');
