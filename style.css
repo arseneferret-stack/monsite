@@ -1800,6 +1800,7 @@ body.article-page {
 }
 
 body.article-page article {
+    box-sizing: border-box;
     width: min(860px, 100%);
     max-width: 860px;
     min-height: 0;
@@ -1839,6 +1840,7 @@ body.article-page article h2 {
     margin: 32px 0 16px;
     font-size: 20px;
     letter-spacing: 0.08em;
+    animation: titleFloat 3s ease-in-out infinite;
 }
 
 body.article-page article h3 {
