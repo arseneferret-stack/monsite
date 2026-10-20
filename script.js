@@ -288,7 +288,7 @@ function fetchSubstackFeed(endpoints) {
 
 function renderWritingProjects(projectsList, items, endpoint) {
     const writingItems = items.filter((item) => {
-        if (!item.localPath) {
+        if (!item.localPath || item.slug === 'coming-soon') {
             return false;
         }
 
