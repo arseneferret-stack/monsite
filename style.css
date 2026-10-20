@@ -1826,20 +1826,20 @@ body.article-page article h3 {
     font-weight: 400;
     line-height: 1.35;
     text-shadow: none;
-    animation: none;
     text-transform: uppercase;
+}
 
 body.article-page article h1 {
     margin: 0 0 16px;
     font-size: 28px;
     letter-spacing: 0.1em;
+    animation: titleFloat 3s ease-in-out infinite;
 }
 
 body.article-page article h2 {
     margin: 32px 0 16px;
     font-size: 20px;
     letter-spacing: 0.08em;
-    animation: titleFloat 3s ease-in-out infinite;
 }
 
 body.article-page article h3 {
